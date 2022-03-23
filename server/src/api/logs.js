@@ -1,6 +1,6 @@
 const { Router } = require("express");
-// const RateLimit = require("express-rate-limit");
-// const MongoStore = require("rate-limit-mongo");
+const RateLimit = require("express-rate-limit");
+const MongoStore = require("rate-limit-mongo");
 
 const LogEntry = require("../models/LogEntry");
 

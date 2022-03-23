@@ -18,19 +18,22 @@ function App() {
     zoom: 4,
   });
 
+  const getEntries = async () => {
+    const logEntries = await listLogEntries();
+    setLogEntries(logEntries);
+    console.log(logEntries);
+  };
+
   useEffect(() => {
-    (async () => {
-      const logEntries = await listLogEntries();
-      setLogEntries(logEntries);
-      console.log(logEntries);
-    })();
+    getEntries();
   }, []);
 
   const showAddMarkerPopup = (event) => {
-    const [longitude, latitude] = event.lngLat;
+    console.log(event);
+    // const locationData = event.lngLat;
     setAddEntryLocation({
-      latitude,
-      longitude,
+      latitude: event.lngLat.lat,
+      longitude: event.lngLat.lng,
     });
   };
 
@@ -139,7 +142,13 @@ function App() {
               onClose={() => () => setAddEntryLocation(null)}
             >
               <div className="popup">
-                <LogEntryForm />
+                <LogEntryForm
+                  onClose={() => {
+                    setAddEntryLocation(null);
+                    getEntries();
+                  }}
+                  location={addEntryLocation}
+                />
               </div>
             </Popup>
           </>
